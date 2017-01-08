@@ -18,14 +18,6 @@ let server = net.createServer((socket) => {
 
   users.push(socket);
 
-  // socket.on('data', (chunk)=>{
-  //   // counter++;
-  //   // socket.write(`the current msg count is ${counter}`);
-
-  //   console.log(`${socket.remotePort}: ${chunk}`);
-  //   // console.log(`the current message count is: ${counter}`);
-  // });
-
   socket.on('data', function (data) {
     process.stdout.write(`${socket.remotePort}: ${data}`);
     users.forEach(function(eachUser){
@@ -33,15 +25,11 @@ let server = net.createServer((socket) => {
     });
   });
 
-  
   process.stdin.on('data', (cmd)=>{
     users.forEach(function(eachUser){
       eachUser.write(`[admin]: ${cmd}`);
     });
   });
-
-  // clientsCount++;
-  // console.log(`the current client count is: ${clientsCount}`);
 
   socket.on('end', ()=>{
     server.getConnections(function(err, count){
@@ -50,14 +38,6 @@ let server = net.createServer((socket) => {
   });
 });
 
-// process.stdin.on('data', function (cmd) {
-//   users.forEach(function(eachUser) {
-//     eachUser.write(`[admin]: ${cmd}`);
-//   });
-// });
-
 server.listen(6969, '0.0.0.0', ()=>{
   console.log(`opened server on`, server.address());
 });
-
-// 
